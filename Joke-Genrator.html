@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Joke Generator</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background: rgb(224, 224, 255);
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #333;
+      }
+      #container {
+        height: max-content;
+        width: 450px;
+        border: 2px solid #333;
+        border-radius: 10px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        text-align: center;
+      }
+      h1 {
+        font-size: 2em;
+        margin-bottom: 20px;
+        color: #5a67d8;
+      }
+      #joke-container {
+        font-size: 1.2em;
+        margin-bottom: 20px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        min-height: 50px;
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+      }
+      #button {
+        margin-top: 20px;
+      }
+      button {
+        background-color: #5a67d8;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      button:hover {
+        background-color: #4c51bf;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="container">
+      <div id="h1"><h1>Random Joke Generator</h1></div>
+      <div id="joke-container"></div>
+      <div id="button">
+        <button onclick="getjoke()">Get Random Joke</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    async function getjoke() {
+      let jokecontainer = document.getElementById("joke-container");
+      jokecontainer.style.opacity = 0;
+      let joke = await fetch(
+        "http://v2.jokeapi.dev/joke/Any?blacklistFlags=nsfw,religious,political,racist,sexist,explicit&type=single"
+      );
+      let data = await joke.json();
+      jokecontainer.textContent = data.joke;
+      jokecontainer.style.opacity = 1;
+    }
+  </script>
+</html>
